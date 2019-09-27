@@ -50,7 +50,7 @@ def main():
   # Use a list of indexes to shuffle the dataset each epoch
   indexes = numpy.arange(len(train_set))
 
-  epochs = 5
+  epochs = 2
   batch_size = 128
 
   # Create an instance of an optimizer:

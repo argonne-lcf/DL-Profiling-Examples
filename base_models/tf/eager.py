@@ -59,7 +59,6 @@ for epoch in range(5):
 
     images = x_train[batch_indexes]
     labels = y_train[batch_indexes]
-    print(labels.shape)
     labels = labels.reshape([batch_size,])
 
     # Gradient tape indicates to TF to build a graph on the fly.

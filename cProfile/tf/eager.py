@@ -43,7 +43,7 @@ model = MyModel()
 # Use a list of indexes to shuffle the dataset each epoch
 indexes = numpy.arange(len(x_train))
 
-epochs = 5
+epochs = 2
 batch_size = 64
 
 # Create an instance of an optimizer:
@@ -59,7 +59,6 @@ for epoch in range(5):
 
     images = x_train[batch_indexes]
     labels = y_train[batch_indexes]
-    print(labels.shape)
     labels = labels.reshape([batch_size,])
 
     # Gradient tape indicates to TF to build a graph on the fly.
