@@ -58,6 +58,7 @@ env > ${COBALT_JOBID}.env
 
 #VTUNE="amplxe-cl -collect advanced-hotspots -finalization-mode=none -r ./${COBALT_JOBID}_amplxe -data-limit=0  --"
 VTUNE="amplxe-cl -collect hotspots -knob sampling-mode=hw -finalization-mode=none -r ./${COBALT_JOBID}_amplxe -data-limit=0  --"
+#VTUNE="amplxe-cl -collect hotspots -knob sampling-mode=hw -finalization-mode=none -r ./${COBALT_JOBID}_amplxe -data-limit=0 -resume-after=300 -duration=500  --"
 #VTUNE="amplxe-cl -collect hpc-performance -knob analyze-openmp=true -finalization-mode=none -r ./${COBALT_JOBID}_amplxe -data-limit=0  --"
 #VTUNE="amplxe-cl -collect memory-consumption -finalization-mode=none -r ./${COBALT_JOBID}_amplxe -data-limit=0   --"
 echo [$SECONDS] running VTUNE command setup: $VTUNE

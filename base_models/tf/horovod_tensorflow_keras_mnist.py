@@ -27,11 +27,12 @@ config = tf.compat.v1.ConfigProto()
 # Tensorflow: Set the number of inter/intra threads
 config.intra_op_parallelism_threads = int(os.environ['OMP_NUM_THREADS'])
 config.inter_op_parallelism_threads = 1
-K.set_session(tf.Session(config=config))
+tf.compat.v1.keras.backend.set_session(tf.compat.v1.Session(config=config))
 
 batch_size = 128
 num_classes = 10
-epochs = 5 
+epochs = 1
+batch_per_epoch = 5
 
 # Input image dimensions
 img_rows, img_cols = 28, 28
@@ -41,6 +42,15 @@ datapath = os.path.dirname(os.path.realpath(__file__)) + '/mnist.tgz'
 print('loading data from here: ' + datapath)
 assert(os.path.exists(datapath))
 (x_train, y_train), (x_test, y_test) = mnist.load_data(datapath)
+
+num_images = batch_per_epoch * batch_size
+
+x_train = x_train[:num_images]
+y_train = y_train[:num_images]
+
+x_test = x_test[:num_images]
+y_test = y_test[:num_images]
+
 
 if K.image_data_format() == 'channels_first':
     x_train = x_train.reshape(x_train.shape[0], 1, img_rows, img_cols)
