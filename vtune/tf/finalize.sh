@@ -20,7 +20,7 @@ echo [$SECONDS] running VTUNE
 amplxe-cl -finalize -r $datadir > ${datadir}.log1 2>&1
 
 ARGS=$(./finalize.py ${datadir}.log1)
-#echo [$SECONDS] ARGS= $ARGS
+echo [$SECONDS] ARGS= $ARGS
 amplxe-cl -finalize -r $datadir $ARGS
 
 echo [$SECONDS] application exited with return code $?

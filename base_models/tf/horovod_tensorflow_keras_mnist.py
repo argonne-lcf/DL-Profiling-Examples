@@ -32,7 +32,7 @@ tf.compat.v1.keras.backend.set_session(tf.compat.v1.Session(config=config))
 batch_size = 128
 num_classes = 10
 epochs = 1
-batch_per_epoch = 5
+batch_per_epoch = 40000
 
 # Input image dimensions
 img_rows, img_cols = 28, 28

@@ -33,7 +33,7 @@ TOTAL_RANKS=$(($NUM_NODES * $RANKS_PER_NODE))
 # Tensorflow & Torch both use Intel's MKL library for 
 # accelerating math operations. MKL uses OpenMP for threading
 # specifying the number of threads for each MPI Rank to use
-export OMP_NUM_THREADS=$(( 128 / $RANKS_PER_NODE ))
+export OMP_NUM_THREADS=64 # $(( 32 / $RANKS_PER_NODE ))
 echo [$SECONDS] OMP_NUM_THREADS = $OMP_NUM_THREADS
 
 # special flag that improves MKL performance on Intel KNL
@@ -44,6 +44,7 @@ export PE_RANK=$ALPS_APP_PE
 export PMI_NO_FORK=1
 export OMP_AFFINITY=compact,granularity=core
 export OMP_STACKSIZE=16G
+export AMPLXE_RUNTOOL_OPTIONS=--no-altstack
 ulimit -s unlimited
 export DARSHAN_DISABLE=1
 LD_PRELOAD=
@@ -57,7 +58,7 @@ env > ${COBALT_JOBID}.env
 
 
 #VTUNE="amplxe-cl -collect advanced-hotspots -finalization-mode=none -r ./${COBALT_JOBID}_amplxe -data-limit=0  --"
-VTUNE="amplxe-cl -collect hotspots -knob sampling-mode=hw -finalization-mode=none -r ./${COBALT_JOBID}_amplxe -data-limit=0  --"
+VTUNE="amplxe-cl -collect hotspots  -finalization-mode=none -r ./${COBALT_JOBID}_amplxe -data-limit=0  --"
 #VTUNE="amplxe-cl -collect hotspots -knob sampling-mode=hw -finalization-mode=none -r ./${COBALT_JOBID}_amplxe -data-limit=0 -resume-after=300 -duration=500  --"
 #VTUNE="amplxe-cl -collect hpc-performance -knob analyze-openmp=true -finalization-mode=none -r ./${COBALT_JOBID}_amplxe -data-limit=0  --"
 #VTUNE="amplxe-cl -collect memory-consumption -finalization-mode=none -r ./${COBALT_JOBID}_amplxe -data-limit=0   --"
@@ -66,7 +67,7 @@ echo [$SECONDS] running VTUNE command setup: $VTUNE
 echo [$SECONDS] running application $app
 
 # execute command on Theta
-aprun -n $TOTAL_RANKS -N $RANKS_PER_NODE $VTUNE $(which python) $app
+aprun -n $TOTAL_RANKS -N $RANKS_PER_NODE --cc none $VTUNE $(which python) $app
 
 echo [$SECONDS] application exited with return code $?
 
