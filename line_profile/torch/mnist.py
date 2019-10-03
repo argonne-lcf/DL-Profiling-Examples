@@ -51,7 +51,7 @@ def main():
   # Use a list of indexes to shuffle the dataset each epoch
   indexes = numpy.arange(len(train_set))
 
-  epochs = 2
+  epochs = 1
   batch_size = 128
 
   # Create an instance of an optimizer:
@@ -64,6 +64,8 @@ def main():
     start = time.time()
     # Shuffle the indexes:
     numpy.random.shuffle(indexes)
+
+    @profile
     for batch in range(len(indexes/batch_size)):
       if (batch+1)*batch_size > 60000:
         continue
